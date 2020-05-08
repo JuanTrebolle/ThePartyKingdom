@@ -1,6 +1,7 @@
 package flyweight;
 
-public interface Valuable {
+public interface T
+{
     String getName();
     int getValue();
 }

@@ -1,21 +1,21 @@
 package adapter;
 
-import flyweight.Valuable;
-
-import java.util.ArrayList;
-
+import utility.collection.ArrayList;
 
 /*Adapter. The Adaptee is the Arraylist, which we delegate the work to*/
-public class Deposit implements ValuableStorage {
-    ArrayList<Valuable> listOfValuables;
+
+public class Deposit<T> implements ValuableStorage<T>{
+
+    private ArrayList<T> listOfValuables;
     private int maxSize;
 
     public Deposit(int maxSize) {
+        this.listOfValuables = new ArrayList<>();
         this.maxSize = maxSize;
     }
 
     @Override
-    public void enqueue(Valuable valuable) {
+    public synchronized void enqueue(T valuable) {
         if (listOfValuables.size() >= maxSize){
             throw new IllegalStateException("Ain't no room for that gold...");
         }
@@ -26,7 +26,7 @@ public class Deposit implements ValuableStorage {
     }
 
     @Override
-    public Valuable dequeue() {
+    public synchronized T dequeue() {
         return listOfValuables.remove(0);
     }
 
@@ -36,7 +36,7 @@ public class Deposit implements ValuableStorage {
     }
 
     @Override
-    public Valuable firstElement() {
+    public T firstElement() {
         if (listOfValuables.size() == 0){
             throw new IllegalStateException("Queue empty");
         }
@@ -49,12 +49,12 @@ public class Deposit implements ValuableStorage {
     }
 
     @Override
-    public int indexOf(Valuable valuable) {
+    public int indexOf(T valuable) {
         return listOfValuables.indexOf(valuable);
     }
 
     @Override
-    public boolean contains(Valuable valuable) {
+    public boolean contains(T valuable) {
         return listOfValuables.contains(valuable);
     }
 }

@@ -1,6 +1,7 @@
 package flyweight;
 
-public class ValuableImpl implements Valuable{
+public class ValuableImpl implements T
+{
 
     private String name;
     private int value;

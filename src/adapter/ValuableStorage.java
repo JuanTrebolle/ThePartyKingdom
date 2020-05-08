@@ -1,13 +1,11 @@
 package adapter;
 
-import flyweight.Valuable;
-
-public interface ValuableStorage {
-    void enqueue(Valuable valuable);
-    Valuable dequeue();
+public interface ValuableStorage<T> {
+    void enqueue(T valuable);
+    T dequeue();
     int size();
-    Valuable firstElement();
+    T firstElement();
     boolean isEmpty();
-    int indexOf(Valuable valuable);
-    boolean contains(Valuable valuable);
+    int indexOf(T valuable);
+    boolean contains(T valuable);
 }
