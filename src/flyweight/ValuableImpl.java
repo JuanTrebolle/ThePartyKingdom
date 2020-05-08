@@ -7,7 +7,6 @@ public class ValuableImpl implements T
     private int value;
 
     public ValuableImpl(String name, int value) {
-        System.out.println("Shine bright like a diamond...");
         this.name = name;
         this.value = value;
     }

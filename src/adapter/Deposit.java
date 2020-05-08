@@ -16,19 +16,42 @@ public class Deposit<T> implements ValuableStorage<T>{
 
     @Override
     public synchronized void enqueue(T valuable) {
-        if (listOfValuables.size() >= maxSize){
-            throw new IllegalStateException("Ain't no room for that gold...");
-        }
         if (valuable == null){
+            while (listOfValuables.size() >= maxSize){
+                try
+                {
+                    wait();
+                }
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+            }
             throw new IllegalArgumentException("No more gold");
         }
         listOfValuables.add(valuable);
+        notifyAll();
     }
 
     @Override
-    public synchronized T dequeue() {
+    public synchronized T dequeue()
+    {
+
+        while (listOfValuables.isEmpty())
+        {
+            try
+            {
+                wait();
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        notifyAll();
         return listOfValuables.remove(0);
     }
+
 
     @Override
     public int size() {
