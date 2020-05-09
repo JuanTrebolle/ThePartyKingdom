@@ -11,7 +11,7 @@ public class Miner<T> implements Runnable{
     private Deposit gemDeposit;
     private T element;
 
-  public Miner(Deposit gemDeposit)
+  public Miner(Mine mine, Deposit gemDeposit)
   {
     this.gemDeposit = gemDeposit;
   }
