@@ -4,6 +4,7 @@ package producer_consumer;
 
 import adapter.Deposit;
 import flyweight.T;
+import proxy.TreasureRoomDoor;
 import singleton.Logger;
 import utility.collection.ArrayList;
 
@@ -11,6 +12,7 @@ public class GovernorRatcliffe implements Runnable
 {
   private Deposit gemDeposit;
   private ArrayList<T> gems;
+  private TreasureRoomDoor treasureRoomDoor;
  // private static final int TARGET = 200;
 
   public GovernorRatcliffe(Deposit gemDeposit)
@@ -56,12 +58,14 @@ public class GovernorRatcliffe implements Runnable
       logger.getMessage("Governor Ratcliffe: Okay Ramon, I got what i need");
       //step 3 clear the list used to contained the gems --> obs we don't have a place to put them so just clear for now
 
-     /* for (int i = 0; i < gems.size() ; i++)
+      for (int i = 0; i < gems.size() ; i++)
       {
-        gems.remove(i);
-      }*/
+        treasureRoomDoor.acquireWriteAccess("Governor Ratcliffe");
+        treasureRoomDoor.addValuable(gems.get(i));
+        treasureRoomDoor.releaseWriteAccess("Governor Ratcliffe");
+      }
 
-     gems.clear();
+       gems.clear();
 
         logger.getMessage("Governor Ratcliffe: List cleared");
 
