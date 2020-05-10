@@ -1,12 +1,11 @@
 package producer_consumer;
 
-//this is the gem transporter but we thought he looked a lot like the guy from Pocahontas
-
 import adapter.Deposit;
 import flyweight.T;
 import proxy.TreasureRoomDoor;
 import singleton.Logger;
 import utility.collection.ArrayList;
+
 
 public class GemTransporter implements Runnable
 {
@@ -32,52 +31,55 @@ public class GemTransporter implements Runnable
       logger.getMessage(name + ": Hallo. I need to take " + random + "$ to the king's treasure room");
 
     while (true){
+
+      int value = 0;
+      T element;
+      element = (T) gemDeposit.dequeue();
+
+      gems.add(element);
+      for (int i = 0; i < gems.size(); i++)
+      {
+      value += element.getValue();
+      }
+
+      logger.getMessage(name +": Okay, I got " + value + " $");
+
       try {
-        Thread.sleep(5000);
+        Thread.sleep(2000);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
 
-      int value = 0;
-      T element;
-
       //step 2 get gem from gem deposit until he has the equal to or over the target amount
+/*
       while (value < random)
       {
-
         for (int i = 0; i < gemDeposit.size(); i++)
         {
           element = (T) gemDeposit.dequeue();
           value += element.getValue();
           gems.add(element);
           logger.getMessage(name +": Okay, I got " + value + " $");
-        }
       }
+        }*/
 
       if(value >= random){
       logger.getMessage(name+ ": Okay, I got what i need");
 
-      }
-
-        try {
-          Thread.sleep(3000);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
-
       //step 3 clear the list used to contained the gems
-      for (int i = 0; i < gems.size() ; i++) {
         treasureRoomDoor.acquireWriteAccess("Transporter");
         logger.getMessage(name + ": write aquired");
-
+      for (int i = 0; i < gems.size() ; i++) {
         treasureRoomDoor.addValuable(gems.get(i));
+        gems.remove(i);
+      }
         treasureRoomDoor.releaseWriteAccess("Transporter");
         logger.getMessage(name + ": write released");
       }
 
       //step 4 sleep
       try {
-        logger.getMessage(name + ": I need a break to smoke my cigar");
+        logger.getMessage(name + ": I need a break to smoke my cigar while i wait for you to find me some gems");
         Thread.sleep(2000);
       } catch (InterruptedException e) {
         e.printStackTrace();

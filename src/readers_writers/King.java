@@ -6,6 +6,7 @@ import singleton.Logger;
 import utility.collection.ArrayList;
 
 public class King implements Runnable{
+
     private TreasureRoomDoor treasureRoomDoor;
     private ArrayList<T> kingList;
     private T myGem;
@@ -21,11 +22,11 @@ public class King implements Runnable{
             Logger logger = Logger.getInstance();
             //Step 1: generate random number to pay the party.
             int random = (int) (Math.random() * (150 - 50) + (50));
-            logger.getMessage("King: I need " + random + "$ for my project X party");
+            logger.getMessage("King: I need " + random + "$ for my party");
 
         while (true) {
             //Step 2: acquire write access.
-            treasureRoomDoor.acquireWriteAccess("Da king...DA-DDY-YAN-KEE!!");
+            treasureRoomDoor.acquireWriteAccess("King");
             logger.getMessage("King: I have write access");
 
             //Step 3: retrieves gems(one at a time) and sleep.
@@ -55,7 +56,7 @@ public class King implements Runnable{
                     treasureRoomDoor.addValuable(kingList.get(i));
                 }
             }
-            treasureRoomDoor.releaseWriteAccess("Da king...DA-DDY-YAN-KEE!");
+            treasureRoomDoor.releaseWriteAccess("King");
 
             //Step 5: sleep
             try {

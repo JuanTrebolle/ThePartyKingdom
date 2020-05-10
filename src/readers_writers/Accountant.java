@@ -23,9 +23,11 @@ public class Accountant implements Runnable
     while (true){
       //step 1. Acquire read
       treasureRoomDoor.acquireReadAccess("Accountant");
+
       //step 2. Count gems in treasure room and then sleep
 
       list = (ArrayList<T>) treasureRoomDoor.lookAtAllGems();
+
       for (int i = 0; i < list.size(); i++)
       {
         sum+= list.get(i).getValue();

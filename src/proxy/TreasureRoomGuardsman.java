@@ -12,9 +12,13 @@ public class TreasureRoomGuardsman implements TreasureRoomDoor
   private boolean activeWriter;
   private int waitingWriters;
   private int activeReaders;
-  private int waitingReaders;
 
   private TreasureRoom treasureRoom;
+
+  public TreasureRoomGuardsman()
+  {
+    this.treasureRoom = new TreasureRoom();
+  }
 
   @Override public synchronized void acquireReadAccess(String actorName)
   {
@@ -29,6 +33,7 @@ public class TreasureRoomGuardsman implements TreasureRoomDoor
       }
     }
     activeReaders++;
+    treasureRoom.acquireReadAccess(actorName);
   }
 
   @Override public synchronized void acquireWriteAccess(String actorName)
@@ -46,6 +51,7 @@ public class TreasureRoomGuardsman implements TreasureRoomDoor
     }
     waitingWriters--;
     activeWriter = true;
+    treasureRoom.acquireWriteAccess(actorName);
   }
 
   @Override public void releaseReadAccess(String actorName)
@@ -54,12 +60,14 @@ public class TreasureRoomGuardsman implements TreasureRoomDoor
     if(activeReaders == 0){
       notifyAll();
     }
+    treasureRoom.releaseReadAccess(actorName);
   }
 
   @Override public void releaseWriteAccess(String actorName)
   {
     activeWriter = false;
     notifyAll();
+    treasureRoom.releaseWriteAccess(actorName);
   }
 
   @Override public T retrieveValuable()

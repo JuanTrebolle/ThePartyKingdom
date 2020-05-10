@@ -9,6 +9,7 @@ import java.util.List;
 public class TreasureRoom implements TreasureRoomDoor {
     private List<T> gems;
     Logger logger = Logger.getInstance();
+
     public TreasureRoom() {
         gems = new ArrayList<>();
     }

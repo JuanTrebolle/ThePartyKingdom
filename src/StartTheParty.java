@@ -16,7 +16,6 @@ public class StartTheParty
 
     Deposit gemDeposit = new Deposit(2000);
 
-    TreasureRoom treasureRoom = new TreasureRoom();
     TreasureRoomDoor guard = new TreasureRoomGuardsman();
 
     Miner ramon = new Miner(mine, gemDeposit, "Ramon");
@@ -25,6 +24,7 @@ public class StartTheParty
 
 
     GemTransporter governorRatcliffe = new GemTransporter(gemDeposit, guard, "Governor Ratcliffe");
+    //this is the gem transporter but we thought he looked a lot like the bad guy from Pocahontas
     GemTransporter sirBlaise = new GemTransporter(gemDeposit, guard, "Sir Blaise Zabini");
 
     Accountant claudia = new Accountant(guard);
