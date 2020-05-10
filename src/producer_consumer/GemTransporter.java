@@ -67,13 +67,13 @@ public class GemTransporter implements Runnable
       logger.getMessage(name+ ": Okay, I got what i need");
 
       //step 3 clear the list used to contained the gems
-        treasureRoomDoor.acquireWriteAccess("Transporter");
+        treasureRoomDoor.acquireWriteAccess(name);
         logger.getMessage(name + ": write aquired");
       for (int i = 0; i < gems.size() ; i++) {
         treasureRoomDoor.addValuable(gems.get(i));
         gems.remove(i);
       }
-        treasureRoomDoor.releaseWriteAccess("Transporter");
+        treasureRoomDoor.releaseWriteAccess(name);
         logger.getMessage(name + ": write released");
       }
 

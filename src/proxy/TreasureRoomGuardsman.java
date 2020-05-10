@@ -4,7 +4,7 @@ import flyweight.T;
 
 import java.util.List;
 
-//proxy. writers preference
+//proxy. readers preference
 
 public class TreasureRoomGuardsman implements TreasureRoomDoor
 {
@@ -12,6 +12,7 @@ public class TreasureRoomGuardsman implements TreasureRoomDoor
   private boolean activeWriter;
   private int waitingWriters;
   private int activeReaders;
+  private int waitingReaders;
 
   private TreasureRoom treasureRoom;
 
@@ -22,7 +23,9 @@ public class TreasureRoomGuardsman implements TreasureRoomDoor
 
   @Override public synchronized void acquireReadAccess(String actorName)
   {
-    while (activeWriter || waitingWriters > 0){
+    waitingReaders++;
+    while(activeWriter)
+    {
       try
       {
         wait();
@@ -32,14 +35,15 @@ public class TreasureRoomGuardsman implements TreasureRoomDoor
         e.printStackTrace();
       }
     }
+    waitingReaders--;
     activeReaders++;
     treasureRoom.acquireReadAccess(actorName);
   }
 
   @Override public synchronized void acquireWriteAccess(String actorName)
   {
-    waitingWriters++;
-    while (activeWriter || activeReaders > 0){
+    while (activeWriter ||  activeReaders > 0 || waitingReaders > 0)
+    {
       try
       {
         wait();
@@ -49,12 +53,11 @@ public class TreasureRoomGuardsman implements TreasureRoomDoor
         e.printStackTrace();
       }
     }
-    waitingWriters--;
     activeWriter = true;
     treasureRoom.acquireWriteAccess(actorName);
   }
 
-  @Override public void releaseReadAccess(String actorName)
+  @Override public synchronized void releaseReadAccess(String actorName)
   {
     activeReaders--;
     if(activeReaders == 0){
@@ -63,7 +66,7 @@ public class TreasureRoomGuardsman implements TreasureRoomDoor
     treasureRoom.releaseReadAccess(actorName);
   }
 
-  @Override public void releaseWriteAccess(String actorName)
+  @Override public synchronized void releaseWriteAccess(String actorName)
   {
     activeWriter = false;
     notifyAll();

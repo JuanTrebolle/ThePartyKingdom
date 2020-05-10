@@ -11,10 +11,13 @@ public class King implements Runnable{
     private ArrayList<T> kingList;
     private T myGem;
     private int value = 0;
+    private String name;
 
-    public King(TreasureRoomDoor treasureRoomDoor)
+    public King(TreasureRoomDoor treasureRoomDoor, String name)
     {
         this.treasureRoomDoor = treasureRoomDoor;
+        this.name = name;
+        this.kingList = new ArrayList<>();
     }
 
     @Override
@@ -22,12 +25,12 @@ public class King implements Runnable{
             Logger logger = Logger.getInstance();
             //Step 1: generate random number to pay the party.
             int random = (int) (Math.random() * (150 - 50) + (50));
-            logger.getMessage("King: I need " + random + "$ for my party");
+            logger.getMessage(name + ": I need " + random + "$ for my party");
 
         while (true) {
             //Step 2: acquire write access.
-            treasureRoomDoor.acquireWriteAccess("King");
-            logger.getMessage("King: I have write access");
+            treasureRoomDoor.acquireWriteAccess(name);
+            logger.getMessage(name + ": I have write access");
 
             //Step 3: retrieves gems(one at a time) and sleep.
             for (int i = 0; i < treasureRoomDoor.lookAtAllGems().size(); i++)
@@ -35,11 +38,11 @@ public class King implements Runnable{
                 myGem = treasureRoomDoor.retrieveValuable();
                 value += myGem.getValue();
                 kingList.add(myGem);
-                logger.getMessage("King: gem to the bag");
+                logger.getMessage(name + ": gem to the bag");
             }
 
             try {
-                logger.getMessage("King: I need a break");
+                logger.getMessage(name + ": I need a break");
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -47,16 +50,16 @@ public class King implements Runnable{
 
             //Step 4: release the write
             if (value >= random){
-                logger.getMessage("King: I'm throwing THE party :)");
+                logger.getMessage(name + ": I'm throwing THE party :)");
                 kingList.clear();
             } else {
-                logger.getMessage("King: That's not enough for my party...");
+                logger.getMessage(name + ": That's not enough for my party...");
                 for (int i = 0; i < kingList.size(); i++)
                 {
                     treasureRoomDoor.addValuable(kingList.get(i));
                 }
             }
-            treasureRoomDoor.releaseWriteAccess("King");
+            treasureRoomDoor.releaseWriteAccess(name);
 
             //Step 5: sleep
             try {

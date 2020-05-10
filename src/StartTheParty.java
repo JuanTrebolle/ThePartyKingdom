@@ -18,22 +18,22 @@ public class StartTheParty
 
     TreasureRoomDoor guard = new TreasureRoomGuardsman();
 
-    Miner ramon = new Miner(mine, gemDeposit, "Ramon");
-    Miner bruno = new Miner(mine, gemDeposit, "Bruno");
-    Miner vanessa = new Miner(mine, gemDeposit, "Vanessa");
+    Miner miner_ramon = new Miner(mine, gemDeposit, "Miner Ramon");
+    Miner miner_bruno = new Miner(mine, gemDeposit, "Miner Bruno");
+    Miner miner_vanessa = new Miner(mine, gemDeposit, "Miner Vanessa");
 
 
     GemTransporter governorRatcliffe = new GemTransporter(gemDeposit, guard, "Governor Ratcliffe");
     //this is the gem transporter but we thought he looked a lot like the bad guy from Pocahontas
     GemTransporter sirBlaise = new GemTransporter(gemDeposit, guard, "Sir Blaise Zabini");
 
-    Accountant claudia = new Accountant(guard);
+    Accountant claudia = new Accountant(guard, "Accountant Claudia");
 
-    King joffrey = new King(guard);
+    King joffrey = new King(guard, "King Joffrey");
 
-    Thread miner1 = new Thread(ramon);
-    Thread miner2 = new Thread(bruno);
-    Thread miner3 = new Thread(vanessa);
+    Thread miner1 = new Thread(miner_ramon);
+    Thread miner2 = new Thread(miner_bruno);
+    Thread miner3 = new Thread(miner_vanessa);
     Thread transporter1 = new Thread(governorRatcliffe);
     Thread transporter2 = new Thread(sirBlaise);
     Thread accountant = new Thread(claudia);
