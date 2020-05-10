@@ -32,8 +32,6 @@ public class GemTransporter implements Runnable
       logger.getMessage(name + ": Hallo. I need to take " + random + "$ to the king's treasure room");
 
     while (true){
-
-
       try {
         Thread.sleep(5000);
       } catch (InterruptedException e) {

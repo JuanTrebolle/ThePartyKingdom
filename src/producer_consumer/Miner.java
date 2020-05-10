@@ -24,23 +24,25 @@ public class Miner<T> implements Runnable{
           Logger logger = Logger.getInstance();
           int random = (int) (Math.random() * (2));
 
-         if(random == 0)
-            element = (T) Mine.getValues("Diamond", 11);
-          logger.getMessage(name + ": wow I found a diamond");
-         if(random == 1)
+         if(random == DIAMOND) {
+             element = (T) Mine.getValues("Diamond", 11);
+             logger.getMessage(name + ": wow I found a diamond");
+         }
+         if(random == GOLDNUGGET) {
              element = (T) Mine.getValues("GoldNugget", 5);
-          logger.getMessage(name + ": wow I found a GoldNugget");
-          if(random == 2)
-             element = (T) Mine.getValues("Ruby", 8);
-          logger.getMessage(name + ": wow I found a Ruby");
+             logger.getMessage(name + ": wow I found a GoldNugget");
+         }
+          if(random == RUBY) {
+              element = (T) Mine.getValues("Ruby", 8);
+              logger.getMessage(name + ": wow I found a Ruby");
+          }
 
           gemDeposit.enqueue(element);
 
             try
             {
                 Thread.sleep(2000);
-              logger.getMessage(name + ": I need a break");
-
+                logger.getMessage(name + ": I need a break");
             }
             catch (InterruptedException e)
             {
