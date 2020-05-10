@@ -1,7 +1,7 @@
 package proxy;
 
 import flyweight.T;
-import flyweight.ValuableImpl;
+
 
 import java.util.List;
 
