@@ -3,6 +3,8 @@ import flyweight.Mine;
 import producer_consumer.GemTransporter;
 import producer_consumer.Miner;
 import proxy.TreasureRoom;
+import proxy.TreasureRoomDoor;
+import proxy.TreasureRoomGuardsman;
 import readers_writers.Accountant;
 import readers_writers.King;
 
@@ -15,18 +17,19 @@ public class StartTheParty
     Deposit gemDeposit = new Deposit(2000);
 
     TreasureRoom treasureRoom = new TreasureRoom();
+    TreasureRoomDoor guard = new TreasureRoomGuardsman();
 
-    Miner ramon = new Miner(mine, gemDeposit);
-    Miner bruno = new Miner(mine, gemDeposit);
-    Miner vanessa = new Miner(mine, gemDeposit);
+    Miner ramon = new Miner(mine, gemDeposit, "Ramon");
+    Miner bruno = new Miner(mine, gemDeposit, "Bruno");
+    Miner vanessa = new Miner(mine, gemDeposit, "Vanessa");
 
 
-    GemTransporter governorRatcliffe = new GemTransporter(gemDeposit);
-    GemTransporter sirBlaise = new GemTransporter(gemDeposit);
+    GemTransporter governorRatcliffe = new GemTransporter(gemDeposit, guard, "Governor Ratcliffe");
+    GemTransporter sirBlaise = new GemTransporter(gemDeposit, guard, "Sir Blaise Zabini");
 
-    Accountant claudia = new Accountant();
+    Accountant claudia = new Accountant(guard);
 
-    King joffrey = new King();
+    King joffrey = new King(guard);
 
     Thread miner1 = new Thread(ramon);
     Thread miner2 = new Thread(bruno);
@@ -36,12 +39,12 @@ public class StartTheParty
     Thread accountant = new Thread(claudia);
     Thread king = new Thread(joffrey);
 
+    king.start();
     miner1.start();
     miner2.start();
     miner3.start();
     transporter1.start();
     transporter2.start();
     accountant.start();
-    king.start();
   }
 }

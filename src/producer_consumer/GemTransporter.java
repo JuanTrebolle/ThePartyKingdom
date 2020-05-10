@@ -13,68 +13,73 @@ public class GemTransporter implements Runnable
   private Deposit gemDeposit;
   private ArrayList<T> gems;
   private TreasureRoomDoor treasureRoomDoor;
- // private static final int TARGET = 200;
+  private String name;
 
-  public GemTransporter(Deposit gemDeposit)
+  public GemTransporter(Deposit gemDeposit, TreasureRoomDoor treasureRoomDoor, String name)
   {
     this.gemDeposit = gemDeposit;
+    this.treasureRoomDoor = treasureRoomDoor;
+    this.gems = new ArrayList<>();
+    this.name = name;
   }
 
   @Override public void run()
   {
-    while (true){
-
-      int value = 0;
-      T element;
       Logger logger = Logger.getInstance();
 
       //step 1 generate random number
       int random = (int) (Math.random() * (200-50) + (50));
-      logger.getMessage("Governor Ratcliffe: Hallo. I need to take " + random + "$ to the king's treasure room");
+      logger.getMessage(name + ": Hallo. I need to take " + random + "$ to the king's treasure room");
+
+    while (true){
+
 
       try {
-        Thread.sleep(10000);
+        Thread.sleep(5000);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
 
+      int value = 0;
+      T element;
+
       //step 2 get gem from gem deposit until he has the equal to or over the target amount
-      do{
+      while (value < random)
+      {
+
+        for (int i = 0; i < gemDeposit.size(); i++)
+        {
+          element = (T) gemDeposit.dequeue();
+          value += element.getValue();
+          gems.add(element);
+          logger.getMessage(name +": Okay, I got " + value + " $");
+        }
+      }
+
+      if(value >= random){
+      logger.getMessage(name+ ": Okay, I got what i need");
+
+      }
+
         try {
           Thread.sleep(3000);
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
-        element = (T) gemDeposit.dequeue();
-        value+= element.getValue();
 
-        try {
-          gems.add(element);
-       } catch (NullPointerException e) {
-         e.printStackTrace();
-        }
-        logger.getMessage("Governor Ratcliffe: Okay Ramon, I got " + value + " $");
-      }while (value < random);
-
-      logger.getMessage("Governor Ratcliffe: Okay Ramon, I got what i need");
-
-      //step 3 clear the list used to contained the gems --> obs we don't have a place to put them so just clear for now
+      //step 3 clear the list used to contained the gems
       for (int i = 0; i < gems.size() ; i++) {
-        treasureRoomDoor.acquireWriteAccess("Governor Ratcliffe");
-        logger.getMessage("Governor Ratcliffe: write aquired");
+        treasureRoomDoor.acquireWriteAccess("Transporter");
+        logger.getMessage(name + ": write aquired");
 
         treasureRoomDoor.addValuable(gems.get(i));
-        treasureRoomDoor.releaseWriteAccess("Governor Ratcliffe");
-        logger.getMessage("Governor Ratcliffe: write released");
+        treasureRoomDoor.releaseWriteAccess("Transporter");
+        logger.getMessage(name + ": write released");
       }
-
-       gems.clear();
-
-        logger.getMessage("Governor Ratcliffe: List cleared");
 
       //step 4 sleep
       try {
-        logger.getMessage("Governor Ratcliffe: I need a break to smoke my cigar");
+        logger.getMessage(name + ": I need a break to smoke my cigar");
         Thread.sleep(2000);
       } catch (InterruptedException e) {
         e.printStackTrace();

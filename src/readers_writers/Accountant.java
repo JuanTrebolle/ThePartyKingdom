@@ -13,6 +13,11 @@ public class Accountant implements Runnable
   private int sum = 0;
   private Logger logger = Logger.getInstance();
 
+  public Accountant(TreasureRoomDoor treasureRoomDoor)
+  {
+    this.treasureRoomDoor = treasureRoomDoor;
+  }
+
   @Override public void run()
   {
     while (true){

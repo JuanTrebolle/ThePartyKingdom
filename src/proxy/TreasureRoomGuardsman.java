@@ -4,7 +4,7 @@ import flyweight.T;
 
 import java.util.List;
 
-//proxy
+//proxy. writers preference
 
 public class TreasureRoomGuardsman implements TreasureRoomDoor
 {
@@ -31,7 +31,7 @@ public class TreasureRoomGuardsman implements TreasureRoomDoor
     activeReaders++;
   }
 
-  @Override public void acquireWriteAccess(String actorName)
+  @Override public synchronized void acquireWriteAccess(String actorName)
   {
     waitingWriters++;
     while (activeWriter || activeReaders > 0){

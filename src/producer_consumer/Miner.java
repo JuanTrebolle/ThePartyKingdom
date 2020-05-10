@@ -10,10 +10,12 @@ public class Miner<T> implements Runnable{
     private static final int RUBY = 2;
     private Deposit gemDeposit;
     private T element;
+    private String name;
 
-  public Miner(Mine mine, Deposit gemDeposit)
+  public Miner(Mine mine, Deposit gemDeposit, String name)
   {
     this.gemDeposit = gemDeposit;
+    this.name = name;
   }
 
   @Override
@@ -24,20 +26,20 @@ public class Miner<T> implements Runnable{
 
          if(random == 0)
             element = (T) Mine.getValues("Diamond", 11);
-          logger.getMessage("Miner: wow I found a diamond");
+          logger.getMessage(name + ": wow I found a diamond");
          if(random == 1)
              element = (T) Mine.getValues("GoldNugget", 5);
-          logger.getMessage("Miner: wow I found a GoldNugget");
+          logger.getMessage(name + ": wow I found a GoldNugget");
           if(random == 2)
              element = (T) Mine.getValues("Ruby", 8);
-          logger.getMessage("Miner: wow I found a Ruby");
+          logger.getMessage(name + ": wow I found a Ruby");
 
           gemDeposit.enqueue(element);
 
             try
             {
                 Thread.sleep(2000);
-              logger.getMessage("Miner: I need a break");
+              logger.getMessage(name + ": I need a break");
 
             }
             catch (InterruptedException e)
