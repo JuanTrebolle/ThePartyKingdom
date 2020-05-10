@@ -21,20 +21,19 @@ public class Miner<T> implements Runnable{
   @Override
     public void run() {
         while (true){
-          Logger logger = Logger.getInstance();
           int random = (int) (Math.random() * (2));
 
          if(random == DIAMOND) {
              element = (T) Mine.getValues("Diamond", 11);
-             logger.getMessage(name + ": wow I found a diamond");
+           Logger.getInstance().getMessage(name +  ": wow I found a diamond");
          }
          if(random == GOLDNUGGET) {
              element = (T) Mine.getValues("GoldNugget", 5);
-             logger.getMessage(name + ": wow I found a GoldNugget");
+           Logger.getInstance().getMessage(name +  ": wow I found a GoldNugget");
          }
           if(random == RUBY) {
               element = (T) Mine.getValues("Ruby", 8);
-              logger.getMessage(name + ": wow I found a Ruby");
+            Logger.getInstance().getMessage(name +  ": wow I found a Ruby");
           }
 
           gemDeposit.enqueue(element);
@@ -42,7 +41,7 @@ public class Miner<T> implements Runnable{
             try
             {
                 Thread.sleep(2000);
-                logger.getMessage(name + ": I need a break");
+                Logger.getInstance().getMessage(name +  ": I need a break");
             }
             catch (InterruptedException e)
             {

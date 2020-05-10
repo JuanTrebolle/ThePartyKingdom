@@ -7,7 +7,6 @@ public class Accountant implements Runnable
 {
   private TreasureRoomDoor treasureRoomDoor = new TreasureRoomGuardsman();
   private int sum = 0;
-  private Logger logger = Logger.getInstance();
   private String name;
 
   public Accountant(TreasureRoomDoor treasureRoomDoor, String name)
@@ -40,7 +39,7 @@ public class Accountant implements Runnable
       }
 
       //step 3. Print total sum of gems(Logger)
-      logger.getMessage(name + ": total sum " + sum + "$");
+      Logger.getInstance().getMessage(name +  ": total sum " + sum + "$");
 
       //step 4. Release read
       treasureRoomDoor.releaseReadAccess(name);

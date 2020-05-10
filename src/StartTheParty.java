@@ -2,7 +2,6 @@ import adapter.Deposit;
 import flyweight.Mine;
 import producer_consumer.GemTransporter;
 import producer_consumer.Miner;
-import proxy.TreasureRoom;
 import proxy.TreasureRoomDoor;
 import proxy.TreasureRoomGuardsman;
 import readers_writers.Accountant;

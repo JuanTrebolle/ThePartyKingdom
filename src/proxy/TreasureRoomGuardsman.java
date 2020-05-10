@@ -10,7 +10,6 @@ public class TreasureRoomGuardsman implements TreasureRoomDoor
 {
 
   private boolean activeWriter;
-  private int waitingWriters;
   private int activeReaders;
   private int waitingReaders;
 

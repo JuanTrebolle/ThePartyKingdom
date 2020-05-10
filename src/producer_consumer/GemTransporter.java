@@ -24,11 +24,9 @@ public class GemTransporter implements Runnable
 
   @Override public void run()
   {
-      Logger logger = Logger.getInstance();
-
       //step 1 generate random number
       int random = (int) (Math.random() * (200-50) + (50));
-      logger.getMessage(name + ": Hallo. I need to take " + random + "$ to the king's treasure room");
+      Logger.getInstance().getMessage(name + ": Hallo. I need to take " + random + "$ to the king's treasure room");
 
     while (true){
 
@@ -42,7 +40,7 @@ public class GemTransporter implements Runnable
       value += element.getValue();
       }
 
-      logger.getMessage(name +": Okay, I got " + value + " $");
+      Logger.getInstance().getMessage(name + ": Okay, I got " + value + " $");
 
       try {
         Thread.sleep(2000);
@@ -51,35 +49,24 @@ public class GemTransporter implements Runnable
       }
 
       //step 2 get gem from gem deposit until he has the equal to or over the target amount
-/*
-      while (value < random)
-      {
-        for (int i = 0; i < gemDeposit.size(); i++)
-        {
-          element = (T) gemDeposit.dequeue();
-          value += element.getValue();
-          gems.add(element);
-          logger.getMessage(name +": Okay, I got " + value + " $");
-      }
-        }*/
 
       if(value >= random){
-      logger.getMessage(name+ ": Okay, I got what i need");
+        Logger.getInstance().getMessage(name +  ": Okay, I got what i need");
 
       //step 3 clear the list used to contained the gems
         treasureRoomDoor.acquireWriteAccess(name);
-        logger.getMessage(name + ": write aquired");
+        Logger.getInstance().getMessage(name +  ": write aquired");
       for (int i = 0; i < gems.size() ; i++) {
         treasureRoomDoor.addValuable(gems.get(i));
         gems.remove(i);
       }
         treasureRoomDoor.releaseWriteAccess(name);
-        logger.getMessage(name + ": write released");
+        Logger.getInstance().getMessage(name +  ": write released");
       }
 
       //step 4 sleep
       try {
-        logger.getMessage(name + ": I need a break to smoke my cigar while i wait for you to find me some gems");
+        Logger.getInstance().getMessage(name +  ": I need a break to smoke my cigar while i wait for you to find me some gems");
         Thread.sleep(2000);
       } catch (InterruptedException e) {
         e.printStackTrace();
